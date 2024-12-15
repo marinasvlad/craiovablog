@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
 </head>
@@ -21,16 +21,20 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/bloggeri}">Bloggeri</a>
                     </li>
-                    <li th:if="${loggedInUser == null}" class="nav-item">
-                        <a class="nav-link" th:href="@{/login}">Login</a>
+                    <li sec:authorize="hasRole('USER') == false" class="nav-item">
+                        <a class="nav-link" th:href="@{/login-bootstrap}">Login</a>
                     </li>
-                    <li th:if="${loggedInUser == null}" class="nav-item">
+                    <li sec:authorize="hasRole('USER') == false" class="nav-item">
                         <a class="nav-link" th:href="@{/register}">Inregistrare</a>
                     </li>
-                    <li th:if="${loggedInUser != null}" class="nav-item">
-                        <a class="nav-link" href="/logout">Logout</a>
+                    <li sec:authorize="hasRole('USER')" class="nav-item">
+                        <a class="nav-link" th:href="@{/articolele-mele}">Articole</a>
                     </li>
                 </ul>
+                <form class="d-flex" style="padding-left: 70%;" sec:authorize="hasRole('USER')" action="#" th:action="@{/logout}"
+                      method="POST">
+                    <input type="submit" value="Logout" class="btn btn-danger" />
+                </form>
             </div>
         </div>
     </nav>
